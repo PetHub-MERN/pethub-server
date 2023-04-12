@@ -110,7 +110,8 @@ router.delete('/pets/:petId', isAuthenticated, (req, res, next) => {
                 message: "Error deleting pet!",
                 error: err
             });
-        });
+        }
+    );
 });
 
 
