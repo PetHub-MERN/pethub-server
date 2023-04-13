@@ -6,6 +6,7 @@ const Adoption = require("../models/Adoption.model");
 
 // require this middleware function to protect routes
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
+const isOwner = require("../middleware/isOwner");
 const { payloadDecoder } = require("../utils/payloadDecoder");
 const { default: mongoose } = require("mongoose");
 
@@ -68,7 +69,7 @@ router.get('/adoptions/:adoptionId', isAuthenticated, (req, res, next) => {
 });
 
 // PUT /api/adoptions/:adoptionId - edit the info of a specific adoption
-router.put('/adoptions/:adoptionId', isAuthenticated, (req, res, next) => {
+router.put('/adoptions/:adoptionId', isAuthenticated, isOwner, (req, res, next) => {
     const { adoptionId } = req.params;
 
     if(!mongoose.Types.ObjectId.isValid(adoptionId)) {
@@ -89,7 +90,7 @@ router.put('/adoptions/:adoptionId', isAuthenticated, (req, res, next) => {
 });
 
 // DELETE /api/adoptions/:adoptionId - remove a specific adoption
-router.delete('/adoptions/:adoptionId', isAuthenticated, (req, res, next) => {
+router.delete('/adoptions/:adoptionId', isAuthenticated, isOwner, (req, res, next) => {
     const { adoptionId } = req.params;
 
     if(!mongoose.Types.ObjectId.isValid(adoptionId)) {

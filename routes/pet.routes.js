@@ -7,6 +7,7 @@ const Pet = require("../models/Pet.model");
 
 // require this middleware function to protect routes
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
+const isOwner = require("../middleware/isOwner");
 
 // require function to decode the payload and get user data
 const { payloadDecoder } = require("../utils/payloadDecoder");
@@ -72,7 +73,7 @@ router.get('/pets/:petId', isAuthenticated, (req, res, next) => {
 });
 
 // PUT /api/pets/:petId - edit the info of a specific pet
-router.put('/pets/:petId', isAuthenticated, (req, res, next) => {
+router.put('/pets/:petId', isAuthenticated, isOwner, (req, res, next) => {
     const { petId } = req.params;
 
     if(!mongoose.Types.ObjectId.isValid(petId)) {
@@ -94,7 +95,7 @@ router.put('/pets/:petId', isAuthenticated, (req, res, next) => {
 });
 
 // DELETE /api/pets/:petId - delete a specific pet from the DB
-router.delete('/pets/:petId', isAuthenticated, (req, res, next) => {
+router.delete('/pets/:petId', isAuthenticated, isOwner, (req, res, next) => {
     const { petId } = req.params;
 
     if(!mongoose.Types.ObjectId.isValid(petId)) {
