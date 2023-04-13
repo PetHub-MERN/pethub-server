@@ -13,7 +13,7 @@ const isOwner = (req, res, next) => {
                 if(pet.owner._id === userId) {
                     next();
                 } else {
-                    res.status(401).json({ message: "You don't have permission to preform that action!" });
+                    res.status(401).json({ message: "You don't have permission to perform that action!" });
                 }
             }).catch((err) => {
                 res.status(500).json({

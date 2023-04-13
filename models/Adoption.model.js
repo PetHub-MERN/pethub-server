@@ -2,6 +2,10 @@ const { Schema, model } = require("mongoose");
 
 const adoptionSchema = new Schema(
   {
+    title: {
+      type: String,
+      required: [true, "Title is required"]
+    },
     announcer: {
       type: Schema.Types.ObjectId, 
       ref: 'User',
