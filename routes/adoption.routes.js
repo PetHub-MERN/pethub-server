@@ -34,6 +34,7 @@ router.post('/adoptions', isAuthenticated, (req, res, next) => {
 router.get('/adoptions', (req, res, next) => {
     Adoption.find()
         .populate('announcer')
+        .populate("pets")
         .then( adoptionsFromDB => {
             res.status(200).json(adoptionsFromDB)
         })
@@ -56,6 +57,7 @@ router.get('/adoptions/:adoptionId', isAuthenticated, (req, res, next) => {
 
     Adoption.findById(adoptionId)
         .populate('announcer')
+        .populate("pets")
         .then( adoptionFromDB => {
             res.status(200).json(adoptionFromDB)
         })
