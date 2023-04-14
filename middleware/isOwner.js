@@ -10,7 +10,7 @@ const isOwner = (req, res, next) => {
         Pet.findById(petId)
             .populate("owner")
             .then((pet) => {
-                if(pet.owner._id === userId) {
+                if(pet.owner._id.toString() === userId) {
                     next();
                 } else {
                     res.status(401).json({ message: "You don't have permission to perform that action!" });
