@@ -28,7 +28,7 @@ const isOwner = (req, res, next) => {
         Adoption.findById(adoptionId)
             .populate('announcer')
             .then( adoption => {
-                if(adoption.announcer._id === userId) {
+                if(adoption.announcer._id.toString() === userId) {
                     next();
                 } else {
                     res.status(401).json({ message: "You don't have permission to perform that action!" })
