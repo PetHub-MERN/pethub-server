@@ -11,6 +11,7 @@ const isOwner = require("../middleware/isOwner");
 
 // require function to decode the payload and get user data
 const { payloadDecoder } = require("../utils/payloadDecoder");
+const Adoption = require("../models/Adoption.model");
 
 // POST /api/pets - create a new pet
 router.post('/pets', isAuthenticated, (req, res, next) => {
@@ -95,7 +96,8 @@ router.put('/pets/:petId', isAuthenticated, isOwner, (req, res, next) => {
 });
 
 // DELETE /api/pets/:petId - delete a specific pet from the DB
-router.delete('/pets/:petId', isAuthenticated, isOwner, (req, res, next) => {
+router.delete('/pets/:petId', isAuthenticated, isOwner, async (req, res, next) => {
+    
     const { petId } = req.params;
 
     if(!mongoose.Types.ObjectId.isValid(petId)) {
@@ -103,16 +105,40 @@ router.delete('/pets/:petId', isAuthenticated, isOwner, (req, res, next) => {
         return;
     };
     
-    Pet.findByIdAndDelete(petId)
-        .then(() => {
-            res.status(200).json(`Pet with ID ${petId} successfully deleted`);
-        }).catch((err) => {
-            res.status(500).json({
-                message: "Error deleting pet!",
-                error: err
-            });
-        }
-    );
+    try{
+
+        const deletedPet = await Pet.findByIdAndDelete(petId);
+        const deletedPetAdoptions = await Adoption.find({pets: {$in: deletedPet._id}});
+        
+        deletedPetAdoptions.forEach( async (adoption) => {
+
+            try{
+                const petIndex = adoption.pets.indexOf(deletedPet._id);
+                const updatedPets = [...adoption.pets];
+                updatedPets.splice(petIndex, 1);
+
+                await Adoption.findByIdAndUpdate(adoption._id, {pets: updatedPets});
+
+                const updatedAdoption = await Adoption.findById(adoption._id);
+
+                if(updatedAdoption.pets.length === 0) {
+                    await Adoption.findByIdAndDelete(updatedAdoption._id);
+                }
+
+            } catch(err){
+                console.error(err);
+            }
+
+        });
+
+        res.status(200).json(`Pet with ID ${petId} successfully deleted`);
+            
+    } catch(err) {
+        res.status(500).json({
+            message: "Error deleting pet!",
+            error: err
+        });
+    }
 });
 
 
