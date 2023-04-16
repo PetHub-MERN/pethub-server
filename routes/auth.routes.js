@@ -12,12 +12,13 @@ const User = require("../models/User.model");
 
 // Require necessary (isAuthenticated) middleware in order to control access to specific routes
 const { isAuthenticated } = require("../middleware/jwt.middleware.js");
+const isNotAuthenticated = require("../middleware/isNotAuthenticated");
 
 // How many rounds should bcrypt run the salt (default - 10 rounds)
 const saltRounds = 10;
 
 // POST /auth/signup  - Creates a new user in the database
-router.post("/signup", (req, res, next) => {
+router.post("/signup", isNotAuthenticated, (req, res, next) => {
   const { email, password, name } = req.body;
 
   // Check if email or password or name are provided as empty strings
@@ -75,7 +76,7 @@ router.post("/signup", (req, res, next) => {
 });
 
 // POST  /auth/login - Verifies email and password and returns a JWT
-router.post("/login", (req, res, next) => {
+router.post("/login", isNotAuthenticated, (req, res, next) => {
   const { email, password } = req.body;
 
   // Check if email or password are provided as empty string
