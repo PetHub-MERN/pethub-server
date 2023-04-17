@@ -12,12 +12,12 @@ const { default: mongoose } = require("mongoose");
 
 // POST /api/adoptions - create a new adoption
 router.post('/adoptions', isAuthenticated, (req, res, next) => {
-    const { title, location, description, pets } = req.body;
+    const { title, location, description, pets, imageUrl } = req.body;
 
     // get current user id from the headers
     const userData = payloadDecoder(req.headers.authorization);
 
-    Adoption.create({ title, location, description, pets, announcer: userData._id})
+    Adoption.create({ title, location, description, pets, imageUrl, announcer: userData._id})
         .then( response => {
             res.status(201).json(response);
         })

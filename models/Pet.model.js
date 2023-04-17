@@ -26,7 +26,11 @@ const petSchema = new Schema(
       type: Schema.Types.ObjectId, 
       ref: 'User',
       required: [true, 'The pet needs to belong to someone']
-    }
+    },
+    imageUrl: {
+      type: String,
+      default: `https://via.placeholder.com/500x500?text=PET`
+    },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

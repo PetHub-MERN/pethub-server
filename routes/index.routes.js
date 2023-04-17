@@ -8,7 +8,7 @@ router.get("/", (req, res, next) => {
 });
 
 // POST /api/upload - Upload User profile pic to Cloudinary
-router.post('/upload', fileUploader.single('userProfileImgUrl'), (req, res, next) => {
+router.post('/upload', fileUploader.single('imageUrl'), (req, res, next) => {
   if(!req.file) {
     next(new Error("No file uploaded!!!"));
     return;

@@ -18,7 +18,7 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Name is required."],
     },
-    userProfileImgUrl: {
+    imageUrl: {
       type: String,
       default: `https://via.placeholder.com/500x500?text=PROFILE`
     },

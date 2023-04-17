@@ -21,7 +21,11 @@ const adoptionSchema = new Schema(
     },
     description: {
       type: String
-    }
+    },
+    imageUrl: {
+      type: String,
+      default: `https://via.placeholder.com/500x500?text=ADOPTION`
+    },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

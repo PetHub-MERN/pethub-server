@@ -15,14 +15,14 @@ const Adoption = require("../models/Adoption.model");
 
 // POST /api/pets - create a new pet
 router.post('/pets', isAuthenticated, (req, res, next) => {
-    const { name, dateOfBirth, species, breed, description } = req.body;
+    const { name, dateOfBirth, species, breed, description, imageUrl } = req.body;
 
     // get the current user id from the headers
     const userData = payloadDecoder(req.headers.authorization)
 
     // const userData = req.payload;
 
-    Pet.create({ name, dateOfBirth, species, breed, description, owner: userData._id })
+    Pet.create({ name, dateOfBirth, species, breed, description, imageUrl, owner: userData._id })
         .then( response => {
             res.status(201).json(response);
         })
