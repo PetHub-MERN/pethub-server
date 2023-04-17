@@ -21,6 +21,8 @@ app.use("/api", require("./routes/pet.routes"));
 
 app.use("/api", require("./routes/adoption.routes"));
 
+app.use("/api", require("./routes/profile.routes"));
+
 app.use("/auth", require("./routes/auth.routes"));
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
