@@ -17,7 +17,28 @@ router.post('/adoptions', isAuthenticated, (req, res, next) => {
     // get current user id from the headers
     const userData = payloadDecoder(req.headers.authorization);
 
-    Adoption.create({ title, location, description, pets, imageUrl, announcer: userData._id})
+    let newAdoption;
+
+    if(imageUrl === null) {
+        newAdoption = {
+            title,
+            location,
+            description,
+            pets,
+            announcer: userData._id
+        };
+    } else {
+        newAdoption = { 
+            title,
+            location,
+            description,
+            pets,
+            imageUrl,
+            announcer: userData._id
+        };
+    }
+
+    Adoption.create(newAdoption)
         .then( response => {
             res.status(201).json(response);
         })
