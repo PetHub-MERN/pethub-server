@@ -103,6 +103,10 @@ router.put('/adoptions/:adoptionId', isAuthenticated, isOwner, (req, res, next) 
 
     let updatedAdoption;
 
+    if(pets.length === 0) {
+        res.status(400).json({ message: 'Adoption should have at least one pet!!!!!!' });
+    }
+
     if(imageUrl === null) {
         updatedAdoption = {
             title, 
