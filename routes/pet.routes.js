@@ -104,7 +104,28 @@ router.put('/pets/:petId', isAuthenticated, isOwner, (req, res, next) => {
         return;
     };
 
-    Pet.findByIdAndUpdate(petId, req.body, { new: true })
+    const { name, dateOfBirth, description, species, breed, imageUrl } = req.body;
+
+    let updatedPet;
+
+    if(imageUrl === null) {
+        updatedPet = {
+            name, 
+            description, 
+            species, 
+            breed
+        }
+    } else {
+        updatedPet = {
+            name, 
+            description, 
+            species, 
+            breed,
+            imageUrl
+        }
+    }
+
+    Pet.findByIdAndUpdate(petId, updatedPet, { new: true })
         .then( updatedPet => {
             res.status(200).json(updatedPet)
         })

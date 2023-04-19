@@ -99,7 +99,28 @@ router.put('/adoptions/:adoptionId', isAuthenticated, isOwner, (req, res, next) 
         res.status(400).json({ message: 'Specified ID is not valid.' })
     };
 
-    Adoption.findByIdAndUpdate(adoptionId, req.body, { new: true })
+    const { title, location, description, pets, imageUrl } = req.body;
+
+    let updatedAdoption;
+
+    if(imageUrl === null) {
+        updatedAdoption = {
+            title, 
+            location,
+            description, 
+            pets
+        }
+    } else {
+        updatedAdoption = {
+            title, 
+            location,
+            description, 
+            pets,
+            imageUrl
+        }
+    }
+
+    Adoption.findByIdAndUpdate(adoptionId, updatedAdoption, { new: true })
         .then( updatedAdoption => {
             res.status(200).json(updatedAdoption)
         })

@@ -4,9 +4,7 @@ const { default: mongoose } = require("mongoose");
 
 const User = require('../models/User.model');
 
-const fileUploader = require('../config/cloudinary.config');
 const { isAuthenticated } = require("../middleware/jwt.middleware");
-const isOwner = require("../middleware/isOwner");
 
 // GET /api/users/:userId - get info of a specific user
 router.get('/users/:userId', isAuthenticated, (req, res, next) => {
@@ -39,17 +37,24 @@ router.put('/users/:userId', isAuthenticated, (req, res, next) => {
         return;
     };
 
-    User.findByIdAndUpdate(userId, req.body, { new: true })
+    const { imageUrl } = req.body;
+    let updatedData;
+
+    if(imageUrl) {
+        updatedData = {imageUrl};
+        User.findByIdAndUpdate(userId, updatedData, { new: true })
         .then( updatedUser => {
             res.status(200).json(updatedUser)
         })
         .catch( err => {
             res.status(500).json({
-                message: 'Error editing the pet!',
+                message: 'Error updating profile picture!!!',
                 error: err
             })
         }
     );
+    } 
+
 })
 
 module.exports = router;
