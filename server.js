@@ -11,10 +11,32 @@ const socketIO = require('socket.io')(server, {
   }
 })
 
+let users = [];
+
 socketIO.on('connection', (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
-  socket.on('disconnection', () => {
+
+  // sends the message to all the users on the server
+  socket.on('message', (data) => {
+    socketIO.emit('messageResponse', data);
+  })
+
+  socket.on('typing', (data) => socket.broadcast.emit('typingResponse', data));
+
+  // listens when a new user joins the server
+  socket.on('newUser', (data) => {
+    // adds the new user to the list of users
+    users.push(data);
+    // sends the list of users back to the client
+    socketIO.emit('newUserResponse', users)
+  })
+
+  socket.on('disconnect', () => {
     console.log('🔥: A user disconnected');
+    // updates the list of users when one is disconnected
+    users = users.filter((user) => user.socketID !== socket.id);
+    socketIO.emit('newUserResponse', users);
+    socket.disconnect();
   })
 })
 
