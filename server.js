@@ -26,7 +26,26 @@ socketIO.on('connection', (socket) => {
   // listens when a new user joins the server
   socket.on('newUser', (data) => {
     // adds the new user to the list of users
-    users.push(data);
+    let userAlreadyExists = false;
+    let userIndex;
+
+    users.forEach((user, index) => {
+      if(user.userNameFromAuth === data.userNameFromAuth) {
+        userAlreadyExists = true;
+        userIndex = index;
+        console.log(index)
+        return;
+      }
+    })
+
+    if(userAlreadyExists) {
+      console.log(users);
+      users.splice(userIndex, 1);
+      users.push(data);
+    } else {
+      users.push(data);
+    }
+
     // sends the list of users back to the client
     socketIO.emit('newUserResponse', users)
   })
