@@ -49,10 +49,18 @@ router.post("/signup", isNotAuthenticated, (req, res, next) => {
     .then((foundUser) => {
       // If the user with the same email already exists, send an error response
       if (foundUser) {
-        res.status(400).json({ message: "User already exists." });
+        res.status(400).json({ message: "User email already exists." });
         return;
       }
 
+      return User.findOne({ name });
+    })
+    .then( (foundUser) => {
+      //If a user with the same name exists, send error message
+      if(foundUser){
+        res.status(400).json({ message: "User name already exists." });
+        return;
+      }
       // If email is unique, proceed to hash the password
       const salt = bcrypt.genSaltSync(saltRounds);
       const hashedPassword = bcrypt.hashSync(password, salt);
