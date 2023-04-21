@@ -104,7 +104,7 @@ router.put('/pets/:petId', isAuthenticated, isOwner, (req, res, next) => {
         return;
     };
 
-    const { name, dateOfBirth, description, species, breed, imageUrl } = req.body;
+    const { name, description, species, breed, imageUrl } = req.body;
 
     let updatedPet;
 
