@@ -35,16 +35,13 @@ You can find this in `/routes/auth.routes.js`.
 |-----------|------------------|-----------------------------------|---------------------------------------------------|---------------------|
 | POST      | /api/auth/signup | –                                 | { name: String, email: String, password: String } | Create an account   |
 | POST      | /api/auth/login  | –                                 | { email: String, password: String }               | Login               |
-| GET       | /api/auth/verify | Authorization: Bearer `<JWT>`       | –                                                 | Verify JWT          |
+| GET       | /api/auth/verify | Authorization: Bearer <JWT>       | –                                                 | Verify JWT          |
 
 ### Profile Endpoints
 | HTTP verb | Path               | Request Headers                   | Request body                                      | Description         |
 |-----------|--------------------|-----------------------------------|---------------------------------------------------|---------------------|
-| GET       | /api/users/:userId | Authorization: Bearer `<JWT>`       | -                                                 | Get a user          |
-| PUT       | /api/users/:userId | Authorization: Bearer `<JWT>`       | { imageUrl: String }                              | Edit user profile   |
-
-### Cloudinary Endpoints
-You can find this in `/routes/index.routes.js`.
+| GET       | /api/users/:userId | Authorization: Bearer <JWT>       | -                                                 | Get a user          |
+| PUT       | /api/users/:userId | Authorization: Bearer <JWT>       | { imageUrl: String }                              | Edit user profile   |
 
 ### Profile Endpoints
 You can find this in `/routes/profile.routes.js`.
@@ -58,22 +55,22 @@ You can find this in `/routes/pet.routes.js`.
 
 | HTTP verb | Path               | Request Headers                   | Request body                                                                                                                       | Description         |
 |-----------|--------------------|-----------------------------------|------------------------------------------------------------------------------------------------------------------------------------|---------------------|
-| POST      | /api/pets          | Authorization: Bearer `<JWT>`       | { name: String, dateOfBirth: Date, species: Array[String], breed: String, description: String, imageUrl: String, owner: ObjectId } | Create a pet        |
+| POST      | /api/pets          | Authorization: Bearer <JWT>       | { name: String, dateOfBirth: Date, species: Array[String], breed: String, description: String, imageUrl: String, owner: ObjectId } | Create a pet        |
 | GET       | /api/pets          | -                                 | -                                                                                                                                  | Get all pets        |
-| GET       | /api/pets/:petId   | Authorization: Bearer `<JWT>`       | -                                                                                                                                  | Get specific pet    |
-| PUT       | /api/pets/:petId   | Authorization: Bearer `<JWT>`       | { name: String, species: String, breed: String, description: String, imageUrl: String }                                            | Update specific pet |
-| DELETE    | /api/pets/:petId   | Authorization: Bearer `<JWT>`       | -                                                                                                                                  | Delete a pet        |
+| GET       | /api/pets/:petId   | Authorization: Bearer <JWT>       | -                                                                                                                                  | Get specific pet    |
+| PUT       | /api/pets/:petId   | Authorization: Bearer <JWT>       | { name: String, species: String, breed: String, description: String, imageUrl: String }                                            | Update specific pet |
+| DELETE    | /api/pets/:petId   | Authorization: Bearer <JWT>       | -                                                                                                                                  | Delete a pet        |
 
 ### Adoption Endpoints
 You can find this in `/routes/adoption.routes.js`.
 
 | HTTP verb | Path                         | Request Headers                   | Request body                                                                                               | Description              |
 |-----------|------------------------------|-----------------------------------|------------------------------------------------------------------------------------------------------------|--------------------------|
-| POST      | /api/adoptions               | Authorization: Bearer `<JWT>`       | { title: String, location: String, description: String, pets: Array[ObjectId], imageUrl: String }          | Create an adoption       |
+| POST      | /api/adoptions               | Authorization: Bearer <JWT>       | { title: String, location: String, description: String, pets: Array[ObjectId], imageUrl: String }          | Create an adoption       |
 | GET       | /api/adoptions               | -                                 | -                                                                                                          | Get all adoptions        |
-| GET       | /api/adoptions/:adoptionId   | Authorization: Bearer `<JWT>`       | -                                                                                                          | Get specific adoption    |
-| PUT       | /api/adoptions/:adoptionId   | Authorization: Bearer `<JWT>`       | { title: String, location: String, description: String, pets: Array[ObjectId], imageUrl: String }          | Update specific adoption |
-| DELETE    | /api/pets/:petId             | Authorization: Bearer `<JWT>`       | -                                                                                                          | Delete an adoption       |
+| GET       | /api/adoptions/:adoptionId   | Authorization: Bearer <JWT>       | -                                                                                                          | Get specific adoption    |
+| PUT       | /api/adoptions/:adoptionId   | Authorization: Bearer <JWT>       | { title: String, location: String, description: String, pets: Array[ObjectId], imageUrl: String }          | Update specific adoption |
+| DELETE    | /api/pets/:petId             | Authorization: Bearer <JWT>       | -                                                                                                          | Delete an adoption       |
 
 ## Demo!
 
